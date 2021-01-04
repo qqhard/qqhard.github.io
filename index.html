@@ -163,6 +163,8 @@ Error message and password prompt
 
 <li>$:/config/Plugins/Disabled/$:/themes/tiddlywiki/vanilla</li>
 
+<li>$:/config/RelinkOnRename</li>
+
 <li>$:/config/SideBar/Visibility/$:/core/ui/SideBar/Open</li>
 
 <li>$:/config/SideBar/Visibility/$:/core/ui/SideBar/Recent</li>
@@ -249,6 +251,8 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>推荐系统的道法术器</li>
+
 <li>C++RPC框架</li>
 
 <li>docker笔记</li>
@@ -260,6 +264,8 @@ Error message and password prompt
 <li>geohash python代码</li>
 
 <li>GettingStarted</li>
+
+<li>make和cmake的区别</li>
 
 <li>shell基本语法</li>
 
@@ -321,6 +327,9 @@ To use in other wikis, drag and drop this link to those wikis: [[Kookma Plugin L
 </div>
 <div created="20201231142207887" modified="20201231142433206" title="$:/config/Plugins/Disabled/$:/themes/tiddlywiki/vanilla">
 <pre>no</pre>
+</div>
+<div created="20210104095256104" modified="20210104095256104" title="$:/config/RelinkOnRename">
+<pre>yes</pre>
 </div>
 <div created="20201231144816576" modified="20201231145509158" title="$:/config/SideBar/Visibility/$:/core/ui/SideBar/Open">
 <pre>show</pre>
@@ -11275,8 +11284,8 @@ $:/config/PageControlButtons/Visibility/$(listItem)$
 <div created="20201231144941357" modified="20210103150016561" title="$:/state/tab--2112689675">
 <pre>$:/core/ui/ControlPanel/Advanced</pre>
 </div>
-<div created="20210104012721375" modified="20210104012827197" title="$:/state/tab--697582678">
-<pre>$:/plugins/kookma/todolist/settings/internals</pre>
+<div created="20210104012721375" modified="20210104062854987" title="$:/state/tab--697582678">
+<pre>$:/core/ui/ControlPanel/Settings/TiddlyWiki</pre>
 </div>
 <div created="20201231040027161" modified="20210103150151958" title="$:/state/tab--86143343">
 <pre>$:/core/ui/ControlPanel/Plugins/Installed/Plugins</pre>
@@ -11296,7 +11305,7 @@ $:/config/PageControlButtons/Visibility/$(listItem)$
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20210104012530011" list="$:/ControlPanel $:/plugins/tiddlywiki/codemirror [[Draft of 'New Tiddler 1']] GettingStarted" modified="20210104012816170" title="$:/StoryList">
+<div created="20210104062839253" list="推荐系统的道法术器 GettingStarted Tensorflow安装" modified="20210104095726201" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20180826061648522" creator="jd" modified="20180826061648522" modifier="jd" title="$:/theme">
@@ -11454,6 +11463,37 @@ $:/config/PageControlButtons/Visibility/$(listItem)$
     }
 }</pre>
 </div>
+<div created="20210104062723160" modified="20210104122013478" tags="" title="推荐系统的道法术器">
+<pre>任何一门技术，都可以从道法术器四个维度去理解，推荐系统也不例外。
+
+器是工具，例如python编程语言、tensorflow机器学习框架、召回和排序的引擎，这些都属于器。
+
+术是算法，例如协同过滤、逻辑回归、各种神经网络，都属于术。
+
+法是原理和规律，它不随着术器的变化而变化，比如机器学习的基本原理、推荐系统的常识性经验。
+
+道是思想与方向，这一点每一个人要么没有理解，要么理解的不同。
+
+器靠探索和练习；术靠学习和积累；法靠提炼总结；道靠体悟。
+
+我理解的推荐的道，简单讲就是大且快，候选物品规模足够大，模型的参数规模足够大，特征和模型够快。
+
+对于“大”，在CV和NLP领域也是如此，算力（器）提升，新的模型结构（术）发展，可以承载更多的数据，达到更好的精度，大家常常将此归因给深度学习。
+
+在推荐领域，这件事发生的更早。
+
+召回上，协同过滤是上个世纪九十年代的算法，直到今天它及其变种依然有强大的生命力，尤其是在需要精准推荐、追寻效率的场景，甚至是无可替代的。从参数规模上讲，它足够大，比如你计算item2item，假如物品有一千万，参数规模的上限是一百万亿，稀疏化之后实际规模也在十亿级别。所以，在我见过的所有的场景（电商和内容电商）里，更先进的算法，都是起补充作用，而非替代。
+
+排序上，大规模稀疏ID特征的使用，让平凡的逻辑回归模型达到百亿、千亿的参数规模，到今天的依然是非常强的baseline。深度学习流行后，如果没有更大参数规模的embedding加持，也很难超越逻辑回归。
+
+我每次接手一个新的推荐场景，都会先从大和快的角度入手，检查召回的候选规模，如果不够大，则增加粗排模型，扩展召回数量，增加召回的算法。查看排序模型的参数量，如果不够大，则重做特征工程、丰富特征维度。特征有没有做到实时话，模型有没有做到小时级、甚至online learning。
+
+$$效果=参数规模*参数效率$$
+
+一般上述没有做好的，推荐算法尚在红利期，维持住基本的参数效率，快速提升参数规模和实时性，就能快速提升效果。
+
+即便过了红利期，系统的参数规模达到了算法工程的天花板，重点优化参数效率时，很多情况下，还是算法加工程的联合优化，参数规模永远比参数效率好提升。</pre>
+</div>
 <div created="20201231144949323" modified="20201231145057683" tags="" title="C++RPC框架">
 <pre>[[thrift]]</pre>
 </div>
@@ -11554,6 +11594,11 @@ if __name__ == '__main__':
 [[tiddlywiki]]
 
 </pre>
+</div>
+<div created="20210104033520590" modified="20210104033742924" tags="" title="make和cmake的区别">
+<pre>https://blog.csdn.net/jc_benben/article/details/78571728
+
+https://www.jianshu.com/p/184a33eddf93</pre>
 </div>
 <div created="20210103020137764" modified="20210103020459461" tags="" title="shell基本语法">
 <pre>!!! 判断文件是否存在
