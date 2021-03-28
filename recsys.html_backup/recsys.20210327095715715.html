@@ -141,8 +141,6 @@ Error message and password prompt
 
 <p>This <a class="tc-tiddlylink-external" href="https://tiddlywiki.com" rel="noopener noreferrer" target="_blank">TiddlyWiki</a> contains the following tiddlers:</p><p><ul>
 
-<li>$:/config/RelinkOnRename</li>
-
 <li>$:/core</li>
 
 <li>$:/isEncrypted</li>
@@ -152,8 +150,6 @@ Error message and password prompt
 <li>$:/SiteTitle</li>
 
 <li>$:/state/advancedsearch/currentTab</li>
-
-<li>$:/state/showeditpreview</li>
 
 <li>$:/state/tab--1498284803</li>
 
@@ -167,15 +163,13 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
-<li>AUC提升了线上没效果怎么办</li>
-
-<li>Draft of 'AUC提升了线上没效果怎么办'</li>
-
 <li>从特征交叉的角度看模型演进</li>
 
 <li>工业推荐系统架构</li>
 
 <li>推荐系统</li>
+
+<li>推荐系统排序模型的AUC</li>
 
 <li>推荐系统的模块</li>
 
@@ -193,9 +187,6 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
-<div created="20210327100919253" modified="20210327100920016" title="$:/config/RelinkOnRename">
-<pre>no</pre>
-</div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="" description="TiddlyWiki5 core" list="readme" name="Core" plugin-priority="0" plugin-type="plugin" title="$:/core" type="application/json" version="5.1.23">
 <pre>{
     &quot;tiddlers&quot;: {
@@ -10072,9 +10063,6 @@ Error message and password prompt
 <div created="20210217113445814" modified="20210217113513897" title="$:/state/advancedsearch/currentTab">
 <pre>$:/core/ui/AdvancedSearch/Standard</pre>
 </div>
-<div created="20210327100312215" modified="20210327110802943" title="$:/state/showeditpreview">
-<pre>no</pre>
-</div>
 <div created="20210217113445814" modified="20210217113513897" title="$:/state/tab--1498284803">
 <pre>$:/core/ui/AdvancedSearch/Standard</pre>
 </div>
@@ -10084,7 +10072,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div list="[[Draft of 'AUC提升了线上没效果怎么办']] 从特征交叉的角度看模型演进 GettingStarted" title="$:/StoryList">
+<div list="推荐系统排序模型的AUC 从特征交叉的角度看模型演进 GettingStarted" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/vanilla" description="Emphasises individual tiddlers" name="Snow White" plugin-priority="0" plugin-type="theme" title="$:/themes/tiddlywiki/snowwhite" type="application/json" version="5.1.23">
@@ -10196,45 +10184,6 @@ Error message and password prompt
     }
 }</pre>
 </div>
-<div created="20210327095431475" modified="20210327100921607" tags="" title="AUC提升了线上没效果怎么办">
-<pre>本文你讲了解到
-* AUC的定义与在推荐排序中的意义
-* AUC提升了
-
-目前，AUC毫无异议的成为了排序模型的离线测评指标。通过离线实验，AUC超过baseline之后，才会把新模型推上线进行实验。</pre>
-</div>
-<div created="20210327095431475" draft.of="AUC提升了线上没效果怎么办" draft.title="AUC提升了但线上没效果怎么办" modified="20210327112846838" tags="" title="Draft of 'AUC提升了线上没效果怎么办'">
-<pre>
-在排序模型的离线实验中，AUC相对于baseline提升了，把模型推上线之后，效果却没有提升。很多推荐算法工程师都有过这样的经历。
-
-! 如何理解AUC
-
-Point-Wise排序模型与二分类无异，对于二分类模型，在正负样本均衡下，以0.5为阈值可以评价模型的准确率、召回率和F1值。以CTR估计为例，正负样本是不均衡的，0.5作为阈值是不合理的，如何评价模型的好坏呢？
-
-答案是多选一些阈值，对于每一个选定的阈值，计算出对应的混淆矩阵，得到多组真正率和假正率，画到一个坐标中，连成一条曲线，就是ROC曲线，下面的面积就是AUC。它还有另一个物理意义，正负样本pair中预估值正序的比例，这与ROC下面积占比的数值是一致的，且更能表征模型的排序能力。
-
-证明连接。
-
-! 离在线一致性
-
-首先应该查的是离在线一致性，即对于一个样本，离线的打分与在线的打分是否一致。可以先看在线预估的均值和离线预估的均值是否相同，如果不相同则一定存在离在线不一致，需要进一步排查。造成不一致的原因可能就是原始特征及特征的交叉方式不一致，最好的方式是在线记录所有的特征，与离线特征进行diff。
-
-所有需要在离线进行特征构造的系统，都难以逃脱离在线不一致的噩梦，最好的方式就是在线样本构造，即预估时的特征构造通过日志系统落盘，用于接下来的训练，这样就能一劳永逸的避免离在线不一致性。但这样的系统，消耗的资源成本巨大，特征工程的成本也大大增加，增加特征要先落至少上月的数据。
-
-话说回来，
-
-! Group AUC
-
-! Online AUC
-
-! 分层AUC
-
-
-
-先从AUC
-
-目前，AUC毫无异议的成为了排序模型的离线测评指标。通过离线实验，AUC超过baseline之后，才会把新模型推上线进行实验。</pre>
-</div>
 <div created="20210327095243400" modified="20210327095429574" tags="" title="从特征交叉的角度看模型演进">
 <pre></pre>
 </div>
@@ -10258,6 +10207,9 @@ Point-Wise排序模型与二分类无异，对于二分类模型，在正负样�
 
 
 </pre>
+</div>
+<div created="20210327095431475" modified="20210327095715623" tags="" title="推荐系统排序模型的AUC">
+<pre></pre>
 </div>
 <div created="20210120084114725" modified="20210121213308171" tags="" title="推荐系统的模块">
 <pre>召回、排序和重排</pre>
